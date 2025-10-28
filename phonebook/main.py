@@ -139,8 +139,7 @@ def main(db_name):
                     
                     
 if __name__ == "__main__":
-    # print(sys.argv)
-    # print(sys.argv[1])
+
     if (args_cont := len(sys.argv)) > 2:
         print(f"One argument expected, got {args_cont -1}")
         raise SystemExit(1)
