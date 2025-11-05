@@ -1,8 +1,91 @@
 import sys
 
+# Все, до чого можна застосувати for … in … : є ітерованими (iterable)  об'єктами: lists, strings, files…
+
+# елементи списку можна прочитати один за одним використовуючи ітерацію:
+print(10*" =Ітератори= ")
+
+# my_list = [1, 2, 3] # my_list є ітерованим об'єктом.
+# for i in my_list:                                                       
+#    print(i)
+
+# списковий вираз також є ітерованим.
+# my_list = [x*x for x in range(3)]
+# for i in my_list:
+#    print(i)
+
+# Ітерації зручно використовувати, тому що, дані можна прочитати багато разів, але вони зберігаються в пам'яті й інколи це призводить до зайвих затрат ресурсів.
+
+print(10*" =генератори= ")
+# Генератори це ті ж самі ітератори, але дані можна ітерувати лише один раз.
+# Це тому, що вони не зберігаються в пам'яті, а генеруються на льоту:
+
+my_generator = (x*x for x in range(3))
+for i in my_generator:
+   print(i)
+print(my_generator)
+print(type(my_generator))
+for i in my_generator:
+   print(i)
+
+# Генератори використовують такий же синтаксис, як і спискові вирази, окрім дужок: ( ) замість [ ].
+
+# Ви не можете виконати for i in my_generator вдруге, оскільки генератор може бути використаний лише раз: він вираховує 0, тоді видаляє його з пам'яті і обчислює 1, видаляє його, обчислює 4 і також його видаляє, один за одним.
+
+# Існує 2 способи створення генераторів: за допомогою генераторних функцій і генераторних виразів.
+
+# Функції-генератори є особливим типом функцій, які повертають відкладений (лінивий) ітератор - об’єкт, схожий на список, проте ліниві ітератори не зберігають свій вміст у пам’яті.
+
+# Генераторні вирази дозволяють швидко створити об’єкт генератора та корисні у випадках, коли використовується розуміння списків, з додатковою перевагою: можна створити їх без створення та зберігання всього об’єкта в пам’яті перед ітерацією. 
+
+# Створення об’єкту-генератора 
+
+nums_squared_gc = (num**2 for num in range(5))
+print(nums_squared_gc)
+# #<generator object <genexpr> at 0x107fbbc78>
+print(list(nums_squared_gc))
+# #[0, 1, 4, 9, 16]
 my_generator = (x*x for x in range(1000))
+my_lust = [x*x for x in range(1000)]
+# print(sys.getsizeof(my_lust))
+# print(sys.getsizeof(my_generator))
 
-print(sys.getsizeof(my_generator))
+# Generator expression дозволяє створювати генератор на льоту за допомогою круглих дужок
+
+# gen_exp = (x ** 2 for x in range(10) if x % 2 == 0)
+# for x in gen_exp:  print(x)
+
+# єдина різниця полягає в тому, що використовуються круглі дужки замість квадратних.
+# multiples_gen = (i for i in range(30) if i % 3 == 0)
+
+# типи даних, що повертають list comprehension та виразами генератора, відрізняються.
+# print(multiples_gen) # Output: <generator object <genexpr> at 0x7fdaa8e407d8>
+# list_comp = [x ** 2 for x in range(10) if x % 2 == 0]
+# gen_exp = (x ** 2 for x in range(10) if x % 2 == 0)
+# print(list_comp) # [0, 4, 16, 36, 64]
+# print(gen_exp) # <generator object <genexpr> at 0x7f600131c410>
+# my_generator = (x*x for x in range(1000))
+
+# Генераторні вирази обчислюються ліниво, тобто генератору не потрібна пам’ять для всього списку, він генерує по одному елементу за раз. Метод sys.getsizeof() застосовують для виміру кількості пам'яті у байтах, необхідної для збереження об'єкта.
+# a = [i for i in range(10)]
+# print(sys.getsizeof(a)) # кількість пам'яті у байтах:
+# під час створення списку Python резервує пам’ять для всього списку та обчислює його на місці.
+
+# print("Python резервує пам’ять для всього списку та обчислює його на місці.")
+# b = (i for i in range(10))
+# print(sys.getsizeof(b))
+
+# Генератор генеруватиме лише наступний елемент послідовності на вимогу.
+# c = [i for i in range(10000)]
+# print("енератор генеруватиме лише наступний елемент послідовності на вимогу")
+# print(sys.getsizeof(c)) # 87624
+# d = (i for i in range(10000))
+# print(sys.getsizeof(d)) # 120
+
+# Генератор працює повільніше, бо коли елемент послідовності обчислюється та повертається, контекст/стан функції має бути збережено. Наступного разу контекст/стан функції використовується для генерації наступного значення. Збереження і завантаження контексту/стану вимагає часу.
+# print("Генератор працює повільніше, бо коли елемент послідовності обчислюється та повертається, контекст/стан функції має бути збережено.")
+# my_generator = (x*x for x in range(1000))
+# print(sys.getsizeof(my_generator))
 
 # for i in my_generator:
 #     print(i)
@@ -10,8 +93,8 @@ print(sys.getsizeof(my_generator))
 # for i in my_generator:
 #     print(i)
     
-my_list = [x*x for x in range(1000)]
-print(sys.getsizeof(my_list))
+# my_list = [x*x for x in range(1000)]
+# print(sys.getsizeof(my_list))
 
 # for i in my_list:
 #     print(i)
@@ -23,124 +106,12 @@ print(sys.getsizeof(my_list))
 
 # print(my_generator)
 
-import cProfile
 
-# cProfile.run('sum([i*2 for i in range(10000)])')
-# invokes the cProfile module to profile the execution of the string statement. cProfile.run takes a statement (here a string) and executes it under the profiler, then prints profiling statistics to stdout (or writes them to a file if you pass the optional filename). The wrapper you showed delegates to the Profile implementation, so the profiler records function call counts, total time spent in each function, and cumulative times before printing the usual table (ncalls, tottime, percall, cumtime, etc.).
+def firstn(n):
+   num = 0
+   while num < n:
+      yield num
+      num += 1
 
-# The profiled statement constructs a list of 10,000 integers via a list comprehension and then sums them:
-
-# The list comprehension produces elements 
-
-# O(n) memory (n=10000). The bulk of CPU time will be in Python-level loop operations and list construction.
-# Gotchas and small improvements
-
-# Passing the code as a string causes cProfile to exec the string; profiling a Python function with Profile.runcall or Profile.runctx (or cProfile.runctx) is often clearer and less error-prone.
-# Avoid building the full list if you don’t need it; use a generator expression to reduce peak memory:
-
-# ```python# Use a generator to avoid allocating the listcProfile.run('sum(i*2 for i in range(10000))')
-
-# - For profiling a callable directly:```python```python# Profile a function call (no string exec)pr = cProfile.Profile()pr.runcall(my_function, arg1, arg2)pr.print_stats()
-
-# - If you want to save stats for later inspection with pstats or snakeviz:```python```pythoncProfile.run('sum([i*2 for i in range(10000)])', filename='out.prof')
-
-# For microbenchmarks, consider timeit instead of the full profiler; for algorithmic profiling across modules, keep the profiled region small so the output is easier to interpret.
-# ```python
-# # Use a generator to avoid allocating the list
-# cProfile.run('sum(i*2 for i in range(10000))')
-
-# - For profiling a callable directly:
-# ```python
-# ```python
-# # Profile a function call (no string exec)
-# pr = cProfile.Profile()
-# pr.runcall(my_function, arg1, arg2)
-# pr.print_stats()
-# - If you want to save stats for later inspection with pstats or snakeviz:
-# ```python
-# ```python
-# cProfile.run('sum([i*2 for i in range(10000)])', filename='out.prof')
-# For microbenchmarks, consider timeit instead of the full profiler; for algorithmic profiling across modules, keep the profiled region small so the output is easier to interpret.
-# cProfile.run('sum([i*2 for i in range(10000)])')
-
-cProfile.run('sum((i*2 for i in range(10000)))')
-
-import itertools
-
-horses = [1,2,3,4]
-races = itertools.permutations(horses)
-# print(races)
-
-# print(list(itertools.permutations(horses)))
-
-
-def createGenerator():
-    my_list = range(10)
-    for i in my_list:
-        yield i*i
-        
-my_generator = createGenerator()
-
-# for i in my_generator:
-#     print(i)
-    
-def infinite_sequence():
-    n = 0
-    while True:
-        yield n
-        n += 1
-        
-# for i in infinite_sequence():
-#     print(i, end=" ")
-
-gen = infinite_sequence()
-
-print(next(gen))
-print(next(gen))
-print(next(gen))
-
-def is_paliandrome(n):
-    if n // 10 == 0:
-        return False
-    tmp = n
-    reversed_n = 0
-    
-    while tmp != 0:
-        reversed_n = (reversed_n * 10) + tmp % 10
-        tmp = tmp // 10
-        
-    if n == reversed_n:
-        return True
-    else:
-        return False
-    
-
-def infinite_paliandromes():
-    n = 0
-    while True:
-        if is_paliandrome(n):
-            i = (yield n)
-            if i is not None:
-                n = i
-        n += 1
-
-gen1 = infinite_paliandromes()
-
-# for i in gen1:
-#     d = len(str(i))
-#     gen1.send(10 ** d)
-    
-
-
-# for i in gen1:
-#     d = len(str(i))
-#     if d == 5:
-#         gen1.throw(ValueError("We don't like large pa;iandromes"))
-#     gen1.send(10 ** d)
-
-
-for i in gen1:
-    d = len(str(i))
-    if d == 5:
-        gen1.close()
-    gen1.send(10 ** d)
+sum_of_first_n = sum(firstn(100000000000))
+print(sum_of_first_n)
