@@ -2,21 +2,24 @@
 This module contains the main application function for the todo CLI.
 '''
 from todo.ui import UI
+import typer
 
-def app():
+app = typer.Typer()
+
+@app.command()
+def init():
+    """Initialize the todo CLI application."""
+    print("Todo CLI Application Initialized")
+
+@app.command()
+def run():
+    """Run the todo CLI application."""
+    # def app():
     
     # print("This is the main application function.")
     """Main application entry point for the todo CLI."""
     ui = UI()
-    print("Todo CLI Application Initialized")
-    print("UI class initialized with the following settings:")
-    print(f"Status Symbols:")
-    print(f"✓ Done: {ui.DONE}")
-    print(f"○ Pending: {ui.PENDING}")
-    
-    print(f"COLORS: {ui.COLORS}")
-    print(f"HEADERS: {ui.HEADERS}")
-    
+       
     ui.hi()
     
     while True:
