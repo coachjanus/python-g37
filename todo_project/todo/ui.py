@@ -10,28 +10,29 @@ from todo.helpers import make_upper, make_title
 from todo import database as db
 from todo import config, ERRORS
 import typer
+from typing import Dict, List, Any, Union
 
 class UI:
 
-    DONE = chr(9989)
-    PENDING = chr(10060)
+    DONE:str = chr(9989)
+    PENDING:str = chr(10060)
     
-    COLORS = {
+    COLORS:Dict[str, Any] = {
         'Learn': 'yellow',
         'Work': 'red',
         'Sports': 'cyan',
         'Study': 'green'
     }
     
-    PRIORITY = {
+    PRIORITY:Dict[str, Any] = {
         'NEUTRAL': 'green',
         'IMPORTANT': 'blue',
         'CRITICAL': 'red'
     }
        
-    keys = ['name', 'style', 'width', 'min_width', 'justify']
+    keys:List[str] = ['name', 'style', 'width', 'min_width', 'justify']
     
-    values = [
+    values:List[List[Union[str, None, int]]] = [
         ["ID", "dim", 6, None, "left"],
         ["Title", None, None, 20, "left"],
         ["Category", None, None, 12, "right"],
@@ -40,45 +41,48 @@ class UI:
     ]
     
     @staticmethod
-    def join_category():
+    def join_category()->str:
         res = ""
         for k, v in UI.COLORS.items():
             res += f"[bold white on {v}] {k} [/]"
         return res
     
     @staticmethod
-    def get_category_color(category):
+    def get_category_color(category:str)->str:
         key = make_title(category)
         return UI.COLORS.get(key, "white")
     
     
-    def choose_category(self):
-        return Prompt.ask("[bold green on white] Coose some category: [/]" + UI.join_category(), default="Work")
+    def choice_category(self)-> str:
+        # Return a canonical Title-cased category
+        choice = Prompt.ask("[bold green on white] Choice some category: [/]" + UI.join_category(), default="Work")
+        return make_title(choice)
 
     # UI methods
     @staticmethod
-    def join_priority():
+    def join_priority()->str:
         res = ""
         for k, v in UI.PRIORITY.items():
             res += f"[bold white on {v}] {k} [/]"
         return res
     
     @staticmethod
-    def get_priority_color(priority):
+    def get_priority_color(priority)->str:
         key = make_upper(priority)
         return UI.PRIORITY.get(key, "green")
     
 
-    def choose_priority(self):
-        
-        return Prompt.ask("[bold grey on white] Coose priority: [/]" + UI.join_priority(), default="NEUTRAL")
+    def choice_priority(self):
+        # Return a canonical UPPERCASE priority
+        choice = Prompt.ask("[bold grey on white] Choice priority: [/]" + UI.join_priority(), default="NEUTRAL")
+        return make_upper(choice)
     
-    def __init__(self):
+    def __init__(self) -> None:
         
         self.task_list = self.get_tasks()
         self.console = Console()
         
-    def get_tasks(self):
+    def get_tasks(self)-> TaskList|typer.Exit:
         if config.CONFIG_FILE_PATH.exists():
             db_path = db.get_database_path(config.CONFIG_FILE_PATH)
         else:
@@ -120,7 +124,7 @@ class UI:
         print(f"Success: {success_message}")
     
     
-    def get_task_details(self) -> dict:
+    def get_task_details(self) -> Dict[str, Any]:
         title = input("Enter task title: ")
         category = input("Enter task category: ")
         return {
@@ -137,8 +141,9 @@ class UI:
     
     def add_todo(self):
         title = input("Enter task title: ").strip().lower()
-        category = make_upper(self.choose_category())
-        priority = make_upper(self.choose_priority())
+        # Normalize category to Title case and priority to UPPER case
+        category = make_title(self.choice_category())
+        priority = make_upper(self.choice_priority())
         match priority:
             case 'IMPORTANT':
                 task = Task.important(title, category)
@@ -146,24 +151,25 @@ class UI:
                 task = Task.critical(title, category)
             case _:
                 task = Task(title, category)
-        added, write_error = self.task_list.add_task(task)
-        if write_error != SUCCESS:
-            typer.secho(f"Failed to add task: {ERRORS.get(write_error, 'unknown error')}", fg=typer.colors.RED)
+        added_response = self.task_list.add_task(task)
+        if added_response.error != SUCCESS:
+            typer.secho(f"Failed to add task: {ERRORS.get(added_response.error, 'unknown error')}", fg=typer.colors.RED)
         else:
             # Handle both Task objects and dicts
+            added = added_response.todo
             title = getattr(added, 'title', None) if hasattr(added, 'title') else added.get('title', '')
             typer.secho(f"Task added: {title}", fg=typer.colors.GREEN)
       
     def get_all_task(self):
-        tasks, error = self.task_list.get_tasks()
-        if error:
-            typer.secho(f"Fetching tasks failed with {ERRORS[error]}", fg=typer.colors.RED)
+        response = self.task_list.get_tasks()
+        if response.error:
+            typer.secho(f"Fetching tasks failed with {ERRORS[response.error]}", fg=typer.colors.RED)
             raise typer.Exit(1)
         else:
-            if len(tasks) == 0:
+            if len(response.tasks_list) == 0:
                 typer.secho(f"There are no tasks in the todo list", fg=typer.colors.RED)
                 # raise typer.Exit(1)
-            self.show(tasks)
+            self.show(response.tasks_list)
         
 
     def set_done_task(self):
@@ -173,23 +179,23 @@ class UI:
             typer.secho(str(e), fg=typer.colors.RED)
             return
 
-        tasks, read_error = self.task_list.get_tasks()
-        if read_error:
-            typer.secho(f"Fetching tasks failed with {ERRORS.get(read_error,'read error')}", fg=typer.colors.RED)
+        response = self.task_list.get_tasks()
+        if response.error:
+            typer.secho(f"Fetching tasks failed with {ERRORS.get(response.error,'read error')}", fg=typer.colors.RED)
             return
 
-        if idx < 1 or idx > len(tasks):
+        if idx < 1 or idx > len(response.tasks_list):
             typer.secho("Invalid task ID", fg=typer.colors.RED)
             return
 
-        task = tasks[idx - 1]
+        task = response.tasks_list[idx - 1]
         
         task['status'] = Status.COMPLETED
         task['completed_at'] = datetime.datetime.now().isoformat()
 
-        _, write_error = self.task_list.update_task(idx, task)
-        if write_error != SUCCESS:
-            typer.secho(f"Failed to mark task done: {ERRORS.get(write_error,'write error')}", fg=typer.colors.RED)
+        update_response = self.task_list.update_task(idx, task)
+        if update_response.error != SUCCESS:
+            typer.secho(f"Failed to mark task done: {ERRORS.get(update_response.error,'write error')}", fg=typer.colors.RED)
         else:
             typer.secho(f"Task marked done: {task.get('title')}", fg=typer.colors.GREEN)
     def remove_task(self):
@@ -199,19 +205,21 @@ class UI:
             typer.secho(str(e), fg=typer.colors.RED)
             return
 
-        removed, err = self.task_list.remove_task(idx)
-        if err != SUCCESS:
-            typer.secho(f"Failed to remove task: {ERRORS.get(err,'error')}", fg=typer.colors.RED)
+        response = self.task_list.remove_task(idx)
+        if response.error != SUCCESS:
+            typer.secho(f"Failed to remove task: {ERRORS.get(response.error,'error')}", fg=typer.colors.RED)
         else:
-            typer.secho(f"Removed task: {removed.get('title')}", fg=typer.colors.GREEN)
+            typer.secho(f"Removed task: {response.todo.get('title') if response.todo else 'unknown'}", fg=typer.colors.GREEN)
+    
     
     def make_header(self):
         headers = []
-        for v in UI.values:
-            d = dict(zip(UI.keys, v))
-            headers.append(d)
+        keys = getattr(UI, "keys", [])
+        for v in getattr(UI, "values", []):
+            if len(v) != len(keys):
+                raise ValueError("UI.values item length mismatch with UI.keys")
+            headers.append(dict(zip(keys, v)))
         return headers
-    
     
     def show(self, tasks):
         table = Table(show_header=True, header_style="bold blue")

@@ -5,14 +5,16 @@ from todo.ui import UI
 import typer
 from todo import config, ERRORS, database as db
 from pathlib import Path
+from typing import Annotated
 
 app = typer.Typer()
-
+# print(app.__dict__)
 @app.command()
 def init(
-    db_path = typer.Option(
-        str(config.DEFAULT_DB_FILE_PATH), 
-        prompt="TODO database location?")):
+    # db_path = typer.Option(
+    #     str(config.DEFAULT_DB_FILE_PATH), 
+    #     prompt="TODO database location?")):
+    db_path: Annotated[str, typer.Option("--db-path", "-db", prompt="TODO database location?"), ] = str(config.DEFAULT_DB_FILE_PATH), ) -> None:
     
     """Initialize the todo CLI application."""
     
@@ -33,6 +35,8 @@ def init(
 def run():
     """Run the todo CLI application."""
     ui = UI()
+    # print(UI.__annotations__)
+    
     ui.hi()
     
     while True:

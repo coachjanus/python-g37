@@ -3,81 +3,90 @@
 '''
 from todo.db_handler import DBHandler
 from todo import DB_READ_ERROR, DB_WRITE_ERROR, SUCCESS, ID_ERROR
+from todo.responses import TodoResponse, DBResponse
+
 
 class TaskList:
-    # def __init__(self)  -> None:
-    #     self.task_list = []
-        
+   
     def __init__(self, db_path) -> None:
         self._db_handler = DBHandler(db_path)
     
-    def add_task(self, task):
-        # self.task_list.append(task)
-        tasks_list, read_error = self._db_handler.read_todos()
-        if read_error == DB_READ_ERROR:
-            return (task, read_error)
+    def add_task(self, task) -> TodoResponse:
+        """Add a task to the DB. Returns (task, error_code)."""
+        # tasks_list, read_error = self._db_handler.read_todos()
+        reader = self._db_handler.read_todos()
+        # if read_error == DB_READ_ERROR:
+        #     return (task, read_error)
+        if reader.error == DB_READ_ERROR:
+            return TodoResponse(task, reader.error)
         
-        # count = len(tasks_list)
-        # task._position = count if count else 0
+        # tasks_list.append(task)
         
-        tasks_list.append(task)
+        reader.tasks_list.append(task)
+        
+        writer =  self._db_handler.write_todos(reader.tasks_list)
+        return TodoResponse(task, writer.error)
+        # _, write_error = self._db_handler.write_todos(tasks_list)
+        # return (task, write_error)
 
-        _, write_error = self._db_handler.write_todos(tasks_list)
-        return (task, write_error)
-        
     
-    def get_tasks(self):
+    def get_tasks(self) -> DBResponse:
         """Return (tasks_list, error_code)."""
-        tasks_list, read_error = self._db_handler.read_todos()
-        return (tasks_list, read_error)
+        reader = self._db_handler.read_todos()
+        return DBResponse(reader.tasks_list, reader.error)
+        # tasks_list, read_error = self._db_handler.read_todos()
+        # return (tasks_list, read_error)
     
-    def clear_tasks(self):
-        """Clear all tasks in the DB. Returns ([], error_code)."""
-        _, write_error = self._db_handler.write_todos([])
-        return ([], write_error)
+    def clear_tasks(self) -> TodoResponse:
+        """Clear all tasks in the DB. Returns TodoResponse with empty list."""
+        writer = self._db_handler.write_todos([])
+        return TodoResponse([], writer.error)
 
-    def remove_task(self, index: int):
-        """Remove task by 1-based index. Returns (removed_task, error_code).
+    def remove_task(self, index: int) -> TodoResponse:
+        """Remove task by 1-based index. Returns TodoResponse with removed task.
 
         Errors: DB_READ_ERROR on read failure, ID_ERROR on invalid index,
         DB_WRITE_ERROR on write failure, SUCCESS on success.
         """
-        tasks_list, read_error = self._db_handler.read_todos()
-        if read_error == DB_READ_ERROR:
-            return (None, DB_READ_ERROR)
+        reader = self._db_handler.read_todos()
+        if reader.error == DB_READ_ERROR:
+            return TodoResponse(None, DB_READ_ERROR)
 
-        if index < 1 or index > len(tasks_list):
-            return (None, ID_ERROR)
+        if index < 1 or index > len(reader.tasks_list):
+            return TodoResponse(None, ID_ERROR)
 
-        removed = tasks_list.pop(index - 1)
-        _, write_error = self._db_handler.write_todos(tasks_list)
-        return (removed, write_error)
+        removed = reader.tasks_list.pop(index - 1)
+        writer = self._db_handler.write_todos(reader.tasks_list)
+        return TodoResponse(removed, writer.error)
 
-    def find_task_by_id(self, task_id) -> dict | None:
-        """Find a task by an 'id' field if present; returns dict or None."""
-        tasks_list, read_error = self._db_handler.read_todos()
-        if read_error == DB_READ_ERROR:
-            return None
-        for task in tasks_list:
+    def find_task_by_id(self, task_id) -> TodoResponse:
+        """Find a task by an 'id' field if present.
+        
+        Returns TodoResponse with task dict or None as data.
+        """
+        reader = self._db_handler.read_todos()
+        if reader.error == DB_READ_ERROR:
+            return TodoResponse(None, DB_READ_ERROR)
+        for task in reader.tasks_list:
             if isinstance(task, dict) and task.get('id') == task_id:
-                return task
-        return None
+                return TodoResponse(task, SUCCESS)
+        return TodoResponse(None, SUCCESS)  # not found, but no error
 
-    def update_task(self, index: int, updated_task):
+    def update_task(self, index: int, updated_task) -> TodoResponse:
         """Replace task at 1-based index with updated_task.
 
-        Returns (updated_task, error_code).
+        Returns TodoResponse with updated task.
         """
-        tasks_list, read_error = self._db_handler.read_todos()
-        if read_error == DB_READ_ERROR:
-            return (None, DB_READ_ERROR)
+        reader = self._db_handler.read_todos()
+        if reader.error == DB_READ_ERROR:
+            return TodoResponse(None, DB_READ_ERROR)
 
-        if index < 1 or index > len(tasks_list):
-            return (None, ID_ERROR)
+        if index < 1 or index > len(reader.tasks_list):
+            return TodoResponse(None, ID_ERROR)
 
-        tasks_list[index - 1] = updated_task
-        _, write_error = self._db_handler.write_todos(tasks_list)
-        return (updated_task, write_error)
+        reader.tasks_list[index - 1] = updated_task
+        writer = self._db_handler.write_todos(reader.tasks_list)
+        return TodoResponse(updated_task, writer.error)
     
     
     

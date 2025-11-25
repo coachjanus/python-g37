@@ -1,71 +1,31 @@
-def make_title(fn):
-    def wrapper():
-        func = fn()
-        output = func.title()
-        return output
-    return wrapper
+from typing import Callable
 
-@make_title
-def to_upper():
-    return f"Coose sone category"
 
-def my_decor(fn):
-    def wrapper():
-        func = fn()
-        make_upper_case = func.upper()
-        return make_upper_case
-    return wrapper
-
-def hi():
-    return f"hello there"
-
-# decorate = my_decor(hi)
-
-# print(decorate())
-
-import sys
-
-def command_decor(fn):
-    def wrapper(arg=None):
-        if arg == None:
-            print(f"""You get an error, You are missing Name.
-                  Usage: app.py [OPTIONS] NAME""")
-            raise sys.exit("Missing argument Name")
-        func = fn(arg)
-        make_upper_case = func.upper()
-        return make_upper_case
-    return wrapper
-
-@command_decor
-def hi_name(name):
-    return f"hello there {name}"
-
-# print(hi_name())
-
-# print(hi_name("Developer"))
-
-def decor(fn):
-    def wrapper(arg):
+def decor(fn: Callable[[str], str]) -> Callable[[str], str]:
+    def wrapper(arg: str) -> str:
         func = fn(arg)
         output = func.title()
         return output
     return wrapper
 
 @decor
-def make_title(name):
+def make_title(name: str) -> str:
     return name
 
-
-def decor_input(fn):
-    def wrapper(arg):
+def decor_input(fn: Callable[[str], str]) -> Callable[[str], str]:
+    def wrapper(arg:str)-> str:
         func = fn(arg)
         output = func.strip().upper()
         return output
     return wrapper
 
 @decor_input
-def make_upper(string):
+def make_upper(string:str)-> str:
     return string
-        
-# print(make_upper("   hello there world   "))
+
+if __name__ == "__main__":
+    # print(make_title("hello there world"))
+    print(decor_input.__annotations__)
+    print(make_upper.__annotations__)
+    print(make_upper("   hello there world   "))
 
