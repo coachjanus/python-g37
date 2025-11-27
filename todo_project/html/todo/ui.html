@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>todo.ui API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>todo.ui</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="todo.ui.UI"><code class="flex name class">
+<span>class <span class="ident">UI</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UI:
+
+    DONE:str = chr(9989)
+    PENDING:str = chr(10060)
+    
+    COLORS:Dict[str, Any] = {
+        &#39;Learn&#39;: &#39;yellow&#39;,
+        &#39;Work&#39;: &#39;red&#39;,
+        &#39;Sports&#39;: &#39;cyan&#39;,
+        &#39;Study&#39;: &#39;green&#39;
+    }
+    
+    PRIORITY:Dict[str, Any] = {
+        &#39;NEUTRAL&#39;: &#39;green&#39;,
+        &#39;IMPORTANT&#39;: &#39;blue&#39;,
+        &#39;CRITICAL&#39;: &#39;red&#39;
+    }
+       
+    keys:List[str] = [&#39;name&#39;, &#39;style&#39;, &#39;width&#39;, &#39;min_width&#39;, &#39;justify&#39;]
+    
+    values:List[List[Union[str, None, int]]] = [
+        [&#34;ID&#34;, &#34;dim&#34;, 6, None, &#34;left&#34;],
+        [&#34;Title&#34;, None, None, 20, &#34;left&#34;],
+        [&#34;Category&#34;, None, None, 12, &#34;right&#34;],
+        [&#34;Priority&#34;, None, None, 12, &#34;right&#34;],
+        [&#34;Status&#34;, None, None, 12, &#34;right&#34;],
+    ]
+    
+    @staticmethod
+    def join_category()-&gt;str:
+        res = &#34;&#34;
+        for k, v in UI.COLORS.items():
+            res += f&#34;[bold white on {v}] {k} [/]&#34;
+        return res
+    
+    @staticmethod
+    def get_category_color(category:str)-&gt;str:
+        key = make_title(category)
+        return UI.COLORS.get(key, &#34;white&#34;)
+    
+    
+    def choice_category(self)-&gt; str:
+        # Return a canonical Title-cased category
+        choice = Prompt.ask(&#34;[bold green on white] Choice some category: [/]&#34; + UI.join_category(), default=&#34;Work&#34;)
+        return make_title(choice)
+
+    # UI methods
+    @staticmethod
+    def join_priority()-&gt;str:
+        res = &#34;&#34;
+        for k, v in UI.PRIORITY.items():
+            res += f&#34;[bold white on {v}] {k} [/]&#34;
+        return res
+    
+    @staticmethod
+    def get_priority_color(priority)-&gt;str:
+        key = make_upper(priority)
+        return UI.PRIORITY.get(key, &#34;green&#34;)
+    
+
+    def choice_priority(self):
+        # Return a canonical UPPERCASE priority
+        choice = Prompt.ask(&#34;[bold grey on white] Choice priority: [/]&#34; + UI.join_priority(), default=&#34;NEUTRAL&#34;)
+        return make_upper(choice)
+    
+    def __init__(self) -&gt; None:
+        
+        self.task_list = self.get_tasks()
+        self.console = Console()
+        
+    def get_tasks(self)-&gt; TaskList|typer.Exit:
+        if config.CONFIG_FILE_PATH.exists():
+            db_path = db.get_database_path(config.CONFIG_FILE_PATH)
+        else:
+            typer.secho(&#34;Config file not found. Please run todo init&#34;, fg=typer.colors.RED)
+            raise typer.Exit(1)
+        if db_path.exists():
+            return TaskList(db_path)
+        else:
+            typer.secho(&#34;Database not found. Please run todo init&#34;, fg=typer.colors.RED)
+            raise typer.Exit(1)
+    
+    def help_me(self):
+        print(&#34;&#34;&#34;
+        All that You can do:
+            l: Show all tasks
+            a: Add new task
+            u: Set done existing task
+            d: Delete existing task
+            h: Print this help
+            q: Exit
+        &#34;&#34;&#34;)
+    
+    def bye(self):
+        print(f&#34;Thanks for using {__app_name__.upper()}&#34;)
+    
+    def hi(self):
+        print(f&#34;Hi! It&#39;s me, {__app_name__.upper()}&#34;)
+    
+    def your_choice(self):
+        return input(f&#34;Please make Your choice (l|a|u|d|h|q) &gt;&gt;&gt; &#34;)
+    
+    def print_message(self, message: str) -&gt; None:
+        print(message)
+        
+    def print_error(self, error_message: str) -&gt; None:
+        print(f&#34;Error: {error_message}&#34;)
+    
+    def print_success(self, success_message: str) -&gt; None:
+        print(f&#34;Success: {success_message}&#34;)
+    
+    
+    def get_task_details(self) -&gt; Dict[str, Any]:
+        title = input(&#34;Enter task title: &#34;)
+        category = input(&#34;Enter task category: &#34;)
+        return {
+            &#39;title&#39;: title,
+            &#39;category&#39;: category,
+            &#39;status&#39;: &#39;pending&#39;
+        }   
+    def get_task_id(self) -&gt; int:
+        task_id = input(&#34;Enter task ID: &#34;).strip()
+        try:
+            return int(task_id)
+        except ValueError:
+            raise ValueError(&#34;Task ID must be an integer&#34;)
+    
+    def add_todo(self):
+        title = input(&#34;Enter task title: &#34;).strip().lower()
+        # Normalize category to Title case and priority to UPPER case
+        category = make_title(self.choice_category())
+        priority = make_upper(self.choice_priority())
+        match priority:
+            case &#39;IMPORTANT&#39;:
+                task = Task.important(title, category)
+            case &#39;CRITICAL&#39;:
+                task = Task.critical(title, category)
+            case _:
+                task = Task(title, category)
+        added_response = self.task_list.add_task(task)
+        if added_response.error != SUCCESS:
+            typer.secho(f&#34;Failed to add task: {ERRORS.get(added_response.error, &#39;unknown error&#39;)}&#34;, fg=typer.colors.RED)
+        else:
+            # Handle both Task objects and dicts
+            added = added_response.todo
+            title = getattr(added, &#39;title&#39;, None) if hasattr(added, &#39;title&#39;) else added.get(&#39;title&#39;, &#39;&#39;)
+            typer.secho(f&#34;Task added: {title}&#34;, fg=typer.colors.GREEN)
+      
+    def get_all_task(self):
+        response = self.task_list.get_tasks()
+        if response.error:
+            typer.secho(f&#34;Fetching tasks failed with {ERRORS[response.error]}&#34;, fg=typer.colors.RED)
+            raise typer.Exit(1)
+        else:
+            if len(response.tasks_list) == 0:
+                typer.secho(f&#34;There are no tasks in the todo list&#34;, fg=typer.colors.RED)
+                # raise typer.Exit(1)
+            self.show(response.tasks_list)
+        
+
+    def set_done_task(self):
+        try:
+            idx = self.get_task_id()
+        except ValueError as e:
+            typer.secho(str(e), fg=typer.colors.RED)
+            return
+
+        response = self.task_list.get_tasks()
+        if response.error:
+            typer.secho(f&#34;Fetching tasks failed with {ERRORS.get(response.error,&#39;read error&#39;)}&#34;, fg=typer.colors.RED)
+            return
+
+        if idx &lt; 1 or idx &gt; len(response.tasks_list):
+            typer.secho(&#34;Invalid task ID&#34;, fg=typer.colors.RED)
+            return
+
+        task = response.tasks_list[idx - 1]
+        
+        task[&#39;status&#39;] = Status.COMPLETED
+        task[&#39;completed_at&#39;] = datetime.datetime.now().isoformat()
+
+        update_response = self.task_list.update_task(idx, task)
+        if update_response.error != SUCCESS:
+            typer.secho(f&#34;Failed to mark task done: {ERRORS.get(update_response.error,&#39;write error&#39;)}&#34;, fg=typer.colors.RED)
+        else:
+            typer.secho(f&#34;Task marked done: {task.get(&#39;title&#39;)}&#34;, fg=typer.colors.GREEN)
+    def remove_task(self):
+        try:
+            idx = self.get_task_id()
+        except ValueError as e:
+            typer.secho(str(e), fg=typer.colors.RED)
+            return
+
+        response = self.task_list.remove_task(idx)
+        if response.error != SUCCESS:
+            typer.secho(f&#34;Failed to remove task: {ERRORS.get(response.error,&#39;error&#39;)}&#34;, fg=typer.colors.RED)
+        else:
+            typer.secho(f&#34;Removed task: {response.todo.get(&#39;title&#39;) if response.todo else &#39;unknown&#39;}&#34;, fg=typer.colors.GREEN)
+    
+    
+    def make_header(self):
+        headers = []
+        keys = getattr(UI, &#34;keys&#34;, [])
+        for v in getattr(UI, &#34;values&#34;, []):
+            if len(v) != len(keys):
+                raise ValueError(&#34;UI.values item length mismatch with UI.keys&#34;)
+            headers.append(dict(zip(keys, v)))
+        return headers
+    
+    def show(self, tasks):
+        table = Table(show_header=True, header_style=&#34;bold blue&#34;)
+        header = self.make_header()
+        
+        for item in header:
+            table.add_column(item[&#39;name&#39;], style=item[&#39;style&#39;], width=item[&#39;width&#39;], min_width=item[&#39;min_width&#39;], justify=item[&#39;justify&#39;])
+            
+                   
+        for index, task in enumerate(tasks, start=1):
+            c = UI.get_category_color(task[&#39;category&#39;])
+            status_symbol = UI.DONE if task[&#39;status&#39;] == 1 else UI.PENDING
+            table.add_row(
+                str(index), 
+                task[&#39;title&#39;], 
+                f&#34;[bold {c}] {task[&#39;category&#39;]} [/]&#34;,
+                
+                str(list(UI.PRIORITY.keys())[task[&#39;position&#39;]]),
+                status_symbol)
+            
+        self.console.print(table)</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="todo.ui.UI.COLORS"><code class="name">var <span class="ident">COLORS</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="todo.ui.UI.DONE"><code class="name">var <span class="ident">DONE</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="todo.ui.UI.PENDING"><code class="name">var <span class="ident">PENDING</span> : str</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="todo.ui.UI.PRIORITY"><code class="name">var <span class="ident">PRIORITY</span> : Dict[str, Any]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="todo.ui.UI.keys"><code class="name">var <span class="ident">keys</span> : List[str]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+<dt id="todo.ui.UI.values"><code class="name">var <span class="ident">values</span> : List[List[str | int | None]]</code></dt>
+<dd>
+<div class="desc"><p>The type of the None singleton.</p></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="todo.ui.UI.get_category_color"><code class="name flex">
+<span>def <span class="ident">get_category_color</span></span>(<span>category: str) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_category_color(category:str)-&gt;str:
+    key = make_title(category)
+    return UI.COLORS.get(key, &#34;white&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.get_priority_color"><code class="name flex">
+<span>def <span class="ident">get_priority_color</span></span>(<span>priority) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_priority_color(priority)-&gt;str:
+    key = make_upper(priority)
+    return UI.PRIORITY.get(key, &#34;green&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.join_category"><code class="name flex">
+<span>def <span class="ident">join_category</span></span>(<span>) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def join_category()-&gt;str:
+    res = &#34;&#34;
+    for k, v in UI.COLORS.items():
+        res += f&#34;[bold white on {v}] {k} [/]&#34;
+    return res</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.join_priority"><code class="name flex">
+<span>def <span class="ident">join_priority</span></span>(<span>) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def join_priority()-&gt;str:
+    res = &#34;&#34;
+    for k, v in UI.PRIORITY.items():
+        res += f&#34;[bold white on {v}] {k} [/]&#34;
+    return res</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="todo.ui.UI.add_todo"><code class="name flex">
+<span>def <span class="ident">add_todo</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_todo(self):
+    title = input(&#34;Enter task title: &#34;).strip().lower()
+    # Normalize category to Title case and priority to UPPER case
+    category = make_title(self.choice_category())
+    priority = make_upper(self.choice_priority())
+    match priority:
+        case &#39;IMPORTANT&#39;:
+            task = Task.important(title, category)
+        case &#39;CRITICAL&#39;:
+            task = Task.critical(title, category)
+        case _:
+            task = Task(title, category)
+    added_response = self.task_list.add_task(task)
+    if added_response.error != SUCCESS:
+        typer.secho(f&#34;Failed to add task: {ERRORS.get(added_response.error, &#39;unknown error&#39;)}&#34;, fg=typer.colors.RED)
+    else:
+        # Handle both Task objects and dicts
+        added = added_response.todo
+        title = getattr(added, &#39;title&#39;, None) if hasattr(added, &#39;title&#39;) else added.get(&#39;title&#39;, &#39;&#39;)
+        typer.secho(f&#34;Task added: {title}&#34;, fg=typer.colors.GREEN)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.bye"><code class="name flex">
+<span>def <span class="ident">bye</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bye(self):
+    print(f&#34;Thanks for using {__app_name__.upper()}&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.choice_category"><code class="name flex">
+<span>def <span class="ident">choice_category</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def choice_category(self)-&gt; str:
+    # Return a canonical Title-cased category
+    choice = Prompt.ask(&#34;[bold green on white] Choice some category: [/]&#34; + UI.join_category(), default=&#34;Work&#34;)
+    return make_title(choice)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.choice_priority"><code class="name flex">
+<span>def <span class="ident">choice_priority</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def choice_priority(self):
+    # Return a canonical UPPERCASE priority
+    choice = Prompt.ask(&#34;[bold grey on white] Choice priority: [/]&#34; + UI.join_priority(), default=&#34;NEUTRAL&#34;)
+    return make_upper(choice)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.get_all_task"><code class="name flex">
+<span>def <span class="ident">get_all_task</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_all_task(self):
+    response = self.task_list.get_tasks()
+    if response.error:
+        typer.secho(f&#34;Fetching tasks failed with {ERRORS[response.error]}&#34;, fg=typer.colors.RED)
+        raise typer.Exit(1)
+    else:
+        if len(response.tasks_list) == 0:
+            typer.secho(f&#34;There are no tasks in the todo list&#34;, fg=typer.colors.RED)
+            # raise typer.Exit(1)
+        self.show(response.tasks_list)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.get_task_details"><code class="name flex">
+<span>def <span class="ident">get_task_details</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_task_details(self) -&gt; Dict[str, Any]:
+    title = input(&#34;Enter task title: &#34;)
+    category = input(&#34;Enter task category: &#34;)
+    return {
+        &#39;title&#39;: title,
+        &#39;category&#39;: category,
+        &#39;status&#39;: &#39;pending&#39;
+    }   </code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.get_task_id"><code class="name flex">
+<span>def <span class="ident">get_task_id</span></span>(<span>self) ‑> int</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_task_id(self) -&gt; int:
+    task_id = input(&#34;Enter task ID: &#34;).strip()
+    try:
+        return int(task_id)
+    except ValueError:
+        raise ValueError(&#34;Task ID must be an integer&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.get_tasks"><code class="name flex">
+<span>def <span class="ident">get_tasks</span></span>(<span>self) ‑> <a title="todo.task_list.TaskList" href="task_list.html#todo.task_list.TaskList">TaskList</a> | click.exceptions.Exit</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_tasks(self)-&gt; TaskList|typer.Exit:
+    if config.CONFIG_FILE_PATH.exists():
+        db_path = db.get_database_path(config.CONFIG_FILE_PATH)
+    else:
+        typer.secho(&#34;Config file not found. Please run todo init&#34;, fg=typer.colors.RED)
+        raise typer.Exit(1)
+    if db_path.exists():
+        return TaskList(db_path)
+    else:
+        typer.secho(&#34;Database not found. Please run todo init&#34;, fg=typer.colors.RED)
+        raise typer.Exit(1)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.help_me"><code class="name flex">
+<span>def <span class="ident">help_me</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def help_me(self):
+    print(&#34;&#34;&#34;
+    All that You can do:
+        l: Show all tasks
+        a: Add new task
+        u: Set done existing task
+        d: Delete existing task
+        h: Print this help
+        q: Exit
+    &#34;&#34;&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.hi"><code class="name flex">
+<span>def <span class="ident">hi</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hi(self):
+    print(f&#34;Hi! It&#39;s me, {__app_name__.upper()}&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.make_header"><code class="name flex">
+<span>def <span class="ident">make_header</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_header(self):
+    headers = []
+    keys = getattr(UI, &#34;keys&#34;, [])
+    for v in getattr(UI, &#34;values&#34;, []):
+        if len(v) != len(keys):
+            raise ValueError(&#34;UI.values item length mismatch with UI.keys&#34;)
+        headers.append(dict(zip(keys, v)))
+    return headers</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.print_error"><code class="name flex">
+<span>def <span class="ident">print_error</span></span>(<span>self, error_message: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_error(self, error_message: str) -&gt; None:
+    print(f&#34;Error: {error_message}&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.print_message"><code class="name flex">
+<span>def <span class="ident">print_message</span></span>(<span>self, message: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_message(self, message: str) -&gt; None:
+    print(message)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.print_success"><code class="name flex">
+<span>def <span class="ident">print_success</span></span>(<span>self, success_message: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_success(self, success_message: str) -&gt; None:
+    print(f&#34;Success: {success_message}&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.remove_task"><code class="name flex">
+<span>def <span class="ident">remove_task</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_task(self):
+    try:
+        idx = self.get_task_id()
+    except ValueError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        return
+
+    response = self.task_list.remove_task(idx)
+    if response.error != SUCCESS:
+        typer.secho(f&#34;Failed to remove task: {ERRORS.get(response.error,&#39;error&#39;)}&#34;, fg=typer.colors.RED)
+    else:
+        typer.secho(f&#34;Removed task: {response.todo.get(&#39;title&#39;) if response.todo else &#39;unknown&#39;}&#34;, fg=typer.colors.GREEN)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.set_done_task"><code class="name flex">
+<span>def <span class="ident">set_done_task</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_done_task(self):
+    try:
+        idx = self.get_task_id()
+    except ValueError as e:
+        typer.secho(str(e), fg=typer.colors.RED)
+        return
+
+    response = self.task_list.get_tasks()
+    if response.error:
+        typer.secho(f&#34;Fetching tasks failed with {ERRORS.get(response.error,&#39;read error&#39;)}&#34;, fg=typer.colors.RED)
+        return
+
+    if idx &lt; 1 or idx &gt; len(response.tasks_list):
+        typer.secho(&#34;Invalid task ID&#34;, fg=typer.colors.RED)
+        return
+
+    task = response.tasks_list[idx - 1]
+    
+    task[&#39;status&#39;] = Status.COMPLETED
+    task[&#39;completed_at&#39;] = datetime.datetime.now().isoformat()
+
+    update_response = self.task_list.update_task(idx, task)
+    if update_response.error != SUCCESS:
+        typer.secho(f&#34;Failed to mark task done: {ERRORS.get(update_response.error,&#39;write error&#39;)}&#34;, fg=typer.colors.RED)
+    else:
+        typer.secho(f&#34;Task marked done: {task.get(&#39;title&#39;)}&#34;, fg=typer.colors.GREEN)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.show"><code class="name flex">
+<span>def <span class="ident">show</span></span>(<span>self, tasks)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def show(self, tasks):
+    table = Table(show_header=True, header_style=&#34;bold blue&#34;)
+    header = self.make_header()
+    
+    for item in header:
+        table.add_column(item[&#39;name&#39;], style=item[&#39;style&#39;], width=item[&#39;width&#39;], min_width=item[&#39;min_width&#39;], justify=item[&#39;justify&#39;])
+        
+               
+    for index, task in enumerate(tasks, start=1):
+        c = UI.get_category_color(task[&#39;category&#39;])
+        status_symbol = UI.DONE if task[&#39;status&#39;] == 1 else UI.PENDING
+        table.add_row(
+            str(index), 
+            task[&#39;title&#39;], 
+            f&#34;[bold {c}] {task[&#39;category&#39;]} [/]&#34;,
+            
+            str(list(UI.PRIORITY.keys())[task[&#39;position&#39;]]),
+            status_symbol)
+        
+    self.console.print(table)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="todo.ui.UI.your_choice"><code class="name flex">
+<span>def <span class="ident">your_choice</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def your_choice(self):
+    return input(f&#34;Please make Your choice (l|a|u|d|h|q) &gt;&gt;&gt; &#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="todo" href="index.html">todo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="todo.ui.UI" href="#todo.ui.UI">UI</a></code></h4>
+<ul class="two-column">
+<li><code><a title="todo.ui.UI.COLORS" href="#todo.ui.UI.COLORS">COLORS</a></code></li>
+<li><code><a title="todo.ui.UI.DONE" href="#todo.ui.UI.DONE">DONE</a></code></li>
+<li><code><a title="todo.ui.UI.PENDING" href="#todo.ui.UI.PENDING">PENDING</a></code></li>
+<li><code><a title="todo.ui.UI.PRIORITY" href="#todo.ui.UI.PRIORITY">PRIORITY</a></code></li>
+<li><code><a title="todo.ui.UI.add_todo" href="#todo.ui.UI.add_todo">add_todo</a></code></li>
+<li><code><a title="todo.ui.UI.bye" href="#todo.ui.UI.bye">bye</a></code></li>
+<li><code><a title="todo.ui.UI.choice_category" href="#todo.ui.UI.choice_category">choice_category</a></code></li>
+<li><code><a title="todo.ui.UI.choice_priority" href="#todo.ui.UI.choice_priority">choice_priority</a></code></li>
+<li><code><a title="todo.ui.UI.get_all_task" href="#todo.ui.UI.get_all_task">get_all_task</a></code></li>
+<li><code><a title="todo.ui.UI.get_category_color" href="#todo.ui.UI.get_category_color">get_category_color</a></code></li>
+<li><code><a title="todo.ui.UI.get_priority_color" href="#todo.ui.UI.get_priority_color">get_priority_color</a></code></li>
+<li><code><a title="todo.ui.UI.get_task_details" href="#todo.ui.UI.get_task_details">get_task_details</a></code></li>
+<li><code><a title="todo.ui.UI.get_task_id" href="#todo.ui.UI.get_task_id">get_task_id</a></code></li>
+<li><code><a title="todo.ui.UI.get_tasks" href="#todo.ui.UI.get_tasks">get_tasks</a></code></li>
+<li><code><a title="todo.ui.UI.help_me" href="#todo.ui.UI.help_me">help_me</a></code></li>
+<li><code><a title="todo.ui.UI.hi" href="#todo.ui.UI.hi">hi</a></code></li>
+<li><code><a title="todo.ui.UI.join_category" href="#todo.ui.UI.join_category">join_category</a></code></li>
+<li><code><a title="todo.ui.UI.join_priority" href="#todo.ui.UI.join_priority">join_priority</a></code></li>
+<li><code><a title="todo.ui.UI.keys" href="#todo.ui.UI.keys">keys</a></code></li>
+<li><code><a title="todo.ui.UI.make_header" href="#todo.ui.UI.make_header">make_header</a></code></li>
+<li><code><a title="todo.ui.UI.print_error" href="#todo.ui.UI.print_error">print_error</a></code></li>
+<li><code><a title="todo.ui.UI.print_message" href="#todo.ui.UI.print_message">print_message</a></code></li>
+<li><code><a title="todo.ui.UI.print_success" href="#todo.ui.UI.print_success">print_success</a></code></li>
+<li><code><a title="todo.ui.UI.remove_task" href="#todo.ui.UI.remove_task">remove_task</a></code></li>
+<li><code><a title="todo.ui.UI.set_done_task" href="#todo.ui.UI.set_done_task">set_done_task</a></code></li>
+<li><code><a title="todo.ui.UI.show" href="#todo.ui.UI.show">show</a></code></li>
+<li><code><a title="todo.ui.UI.values" href="#todo.ui.UI.values">values</a></code></li>
+<li><code><a title="todo.ui.UI.your_choice" href="#todo.ui.UI.your_choice">your_choice</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
