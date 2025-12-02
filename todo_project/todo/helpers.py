@@ -37,6 +37,7 @@ Returns:
     The result of the decorated function with whitespace stripped and converted to uppercase.
 """
 
+
 from typing import Callable
 def decor(fn: Callable[[str], str]) -> Callable[[str], str]:
     def wrapper(arg: str) -> str:

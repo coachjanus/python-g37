@@ -1,6 +1,6 @@
 import unittest
 from todo.model import Status, Priority
-# from todo.model import Status, Priority
+
 
 class TestStatus(unittest.TestCase):
     def test_status_values(self):

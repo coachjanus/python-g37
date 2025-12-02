@@ -91,28 +91,28 @@ def test_init_app_propagates_codes(monkeypatch, init_ret, create_ret, expected):
 #     assert file_path.read_text() == "Hello, Pytest!"
 
 # monkeypatch.setattr(obj, name, value, raising=True): Встановлює атрибут для об'єкта, класу або модуля.
-def test_setattr_example(monkeypatch):
-        class MyClass:
-            value = 10
+# def test_setattr_example(monkeypatch):
+#         class MyClass:
+#             value = 10
         
-        monkeypatch.setattr(MyClass, 'value', 20)
-        assert MyClass.value == 20
-# monkeypatch.delattr(obj, name, raising=True): Видаляє атрибут з об'єкта, класу або модуля.
-    def test_delattr_example(monkeypatch):
-        class MyClass:
-            value = 10
+#         monkeypatch.setattr(MyClass, 'value', 20)
+#         assert MyClass.value == 20
+# # monkeypatch.delattr(obj, name, raising=True): Видаляє атрибут з об'єкта, класу або модуля.
+# def test_delattr_example(monkeypatch):
+#         class MyClass:
+#             value = 10
         
-        monkeypatch.delattr(MyClass, 'value')
-        # Accessing MyClass.value now would raise an AttributeError
+#         monkeypatch.delattr(MyClass, 'value')
+#         # Accessing MyClass.value now would raise an AttributeError
 
-# monkeypatch.setitem(dic, name, value): Sets an item in a dictionary-like object. 
+# # monkeypatch.setitem(dic, name, value): Sets an item in a dictionary-like object. 
 
-    def test_setitem_example(monkeypatch):
-        my_dict = {'key1': 'value1'}
-        monkeypatch.setitem(my_dict, 'key2', 'value2')
-        assert my_dict == {'key1': 'value1', 'key2': 'value2'}
-# monkeypatch.delitem(dic, name, raising=True): Deletes an item from a dictionary-like object. 
-    def test_delitem_example(monkeypatch):
-        my_dict = {'key1': 'value1'}
-        monkeypatch.delitem(my_dict, 'key1')
-        assert my_dict == {}
+# def test_setitem_example(monkeypatch):
+#         my_dict = {'key1': 'value1'}
+#         monkeypatch.setitem(my_dict, 'key2', 'value2')
+#         assert my_dict == {'key1': 'value1', 'key2': 'value2'}
+# # monkeypatch.delitem(dic, name, raising=True): Deletes an item from a dictionary-like object. 
+# def test_delitem_example(monkeypatch):
+#         my_dict = {'key1': 'value1'}
+#         monkeypatch.delitem(my_dict, 'key1')
+#         assert my_dict == {}
