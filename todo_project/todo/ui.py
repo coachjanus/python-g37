@@ -1,3 +1,129 @@
+"""
+User interface module for the todo application.
+This module provides a console-oriented UI class (UI) that coordinates
+user interaction, formatting and display of tasks, and calls into the
+TaskList data layer. It uses 'rich' for table rendering and styling,
+and 'typer' for colored error/success output and graceful exits.
+Main components
+---------------
+UI (class)
+    A high-level interactive controller that:
+    - Loads the task database (via todo.database and todo.config) into a
+      TaskList instance at initialization.
+    - Presents prompts to the user for creating tasks, choosing category
+      and priority, marking tasks done and removing tasks.
+    - Renders task lists as a styled table using rich.Table and rich.Console.
+    - Normalizes user input for category (Title case) and priority (UPPER).
+    - Uses typer.secho for colored success/error messages.
+Class attributes
+    DONE (str) / PENDING (str)
+        Unicode symbols used to indicate task completion status in the table.
+    COLORS (dict)
+        Mapping of canonical category names (Title case) to background
+        colors used for category badges in the table.
+    PRIORITY (dict)
+        Mapping of priority keys (UPPER) to background colors used to
+        display priority badges in prompts and the table.
+    keys (list)
+        Column spec keys used by make_header to convert UI.values to a
+        list of column descriptor dicts.
+    values (list of lists)
+        Column definitions corresponding to keys. Each inner list must match
+        the length of 'keys' and defines the column name, style, width,
+        min_width and justification for the rich.Table.
+Important instance methods and behavior
+    __init__(self)
+        - Calls get_tasks to load TaskList and sets up a rich.Console instance.
+        - Raises typer.Exit(1) if configuration or database file is missing.
+    get_tasks(self) -> TaskList or raises typer.Exit
+        - Resolves the configured database path via todo.database and
+          returns a TaskList instance pointed at the underlying DB.
+        - If the config file or database file is missing, prints a colored
+          error and raises typer.Exit(1).
+    choice_category(self) -> str
+        - Prompts the user to choose a category with a colored set of options
+          and returns the canonical Title-cased category string.
+    choice_priority(self) -> str
+        - Prompts the user to choose a priority and returns the canonical
+          UPPER-case priority string.
+    add_todo(self)
+        - Prompts for a task title, category and priority, normalizes inputs,
+          constructs an appropriate Task object (Task, Task.important, or
+          Task.critical), and calls TaskList.add_task.
+        - Prints a colored success or error message based on the response.
+        - Handles returned todo values that may be Task objects or dicts.
+    get_all_task(self)
+        - Retrieves all tasks via TaskList.get_tasks and displays them
+          with show().
+        - On failure prints an error and raises typer.Exit(1).
+    set_done_task(self)
+        - Prompts for a task ID (1-based), validates the ID against the
+          current task list and updates the task's status to completed and
+          completed_at timestamp.
+        - Calls TaskList.update_task to persist changes; displays colored
+          success or error messages.
+        - If the input ID can't be parsed as int, prints an error and
+          returns early (does not raise). If fetching tasks fails, prints
+          an error and returns early.
+    remove_task(self)
+        - Prompts for a task ID and calls TaskList.remove_task.
+        - Prints colored success or error messages. If parsing of the ID
+          fails, prints an error and returns early.
+    get_task_details(self) -> dict
+        - Prompts the user for a title and category and returns a dict with
+          keys 'title', 'category', and default 'status' == 'pending'.
+        - (This helper is provided but add_todo uses a different interactive
+          flow that also asks for priority.)
+    get_task_id(self) -> int
+        - Prompts for a task ID string, strips whitespace and converts to int.
+        - Raises ValueError if conversion fails.
+    make_header(self) -> list[dict]
+        - Validates that each entry in UI.values has the same length as UI.keys,
+          zips them into column descriptor dicts and returns the list for use
+          when building the rich table.
+        - Raises ValueError on mismatch.
+    show(self, tasks)
+        - Renders the provided iterable/list of task dicts as a rich.Table with
+          configured headers and styles. Expects each task to be a mapping
+          containing at least: 'title', 'category', 'status' and 'position'.
+        - Format details:
+            - Index (1-based) is rendered as ID column.
+            - Category is shown as a colored badge using UI.COLORS.
+            - Priority is derived from the task['position'] index into
+              UI.PRIORITY.keys().
+            - Status uses DONE/PENDING symbols based on integer status.
+        - Uses self.console.print to output the table.
+Exceptions, errors and side effects
+    - Many UI methods call TaskList and interact with the filesystem/stateful
+      database; side effects include writes via TaskList.update_task,
+      TaskList.add_task and TaskList.remove_task.
+    - get_tasks will raise typer.Exit(1) with an explanatory message if the
+      configuration or database is missing.
+    - get_task_id raises ValueError for non-integer input.
+    - Several methods swallow input/parsing errors and display colored
+      messages rather than propagating exceptions to the caller.
+Notes and assumptions
+    - The module expects other application modules to provide:
+        - todo.task_list.TaskList: a class exposing get_tasks, add_task,
+          update_task, remove_task methods and response objects with attributes
+          like error, tasks_list, todo.
+        - todo.model.Task and Status, with helper constructors Task.important
+          and Task.critical, and a numeric status scheme where completed
+          corresponds to 1.
+        - todo.helpers.make_upper and make_title for input normalization.
+        - todo.database and todo.config to locate the database file path.
+        - SUCCESS and ERRORS constants for standardized response handling.
+    - The UI class is designed for interactive console use and does not
+      implement automated/non-interactive APIs. It relies on 'rich' and
+      'typer' for user-facing formatting and coloring.
+Examples
+    Typical interactive actions performed by a UI instance (high level):
+        ui = UI()               # loads TaskList and prepares console
+        ui.add_todo()           # interactively add a task
+        ui.get_all_task()       # display all tasks
+        ui.set_done_task()      # mark a chosen task done
+        ui.remove_task()        # remove a chosen task
+"""
 from todo import __app_name__
 from todo.task_list import TaskList
 from todo.model import Task, Status

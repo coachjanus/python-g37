@@ -1,7 +1,31 @@
-'''
-
+'''Module: todo.task_list
+TaskList provides CRUD operations for managing tasks stored in a database.
+Methods
+-------
+__init__(db_path)
+    Initialize TaskList with the given database path.
+add_task(task) -> TodoResponse
+    Add a task to the database.
+    Returns a TodoResponse containing the task and an error code.
+get_tasks() -> DBResponse
+    Retrieve all tasks from the database.
+    Returns a DBResponse with the list of tasks and an error code.
+clear_tasks() -> TodoResponse
+    Remove all tasks from the database.
+    Returns a TodoResponse with an empty list and an error code.
+remove_task(index: int) -> TodoResponse
+    Remove a task by its 1-based index.
+    Returns a TodoResponse with the removed task and an error code.
+    Error codes: DB_READ_ERROR, ID_ERROR, DB_WRITE_ERROR, SUCCESS.
+find_task_by_id(task_id) -> TodoResponse
+    Find a task by its 'id' field.
+    Returns a TodoResponse with the found task (or None) and an error code.
+update_task(index: int, updated_task) -> TodoResponse
+    Update a task at the given 1-based index with a new value.
+    Returns a TodoResponse with the updated task and an error code.
 '''
 from todo.db_handler import DBHandler
+
 from todo import DB_READ_ERROR, DB_WRITE_ERROR, SUCCESS, ID_ERROR
 from todo.responses import TodoResponse, DBResponse
 
@@ -13,29 +37,23 @@ class TaskList:
     
     def add_task(self, task) -> TodoResponse:
         """Add a task to the DB. Returns (task, error_code)."""
-        # tasks_list, read_error = self._db_handler.read_todos()
+        
         reader = self._db_handler.read_todos()
-        # if read_error == DB_READ_ERROR:
-        #     return (task, read_error)
+        
         if reader.error == DB_READ_ERROR:
             return TodoResponse(task, reader.error)
         
-        # tasks_list.append(task)
-        
+               
         reader.tasks_list.append(task)
         
         writer =  self._db_handler.write_todos(reader.tasks_list)
         return TodoResponse(task, writer.error)
-        # _, write_error = self._db_handler.write_todos(tasks_list)
-        # return (task, write_error)
-
-    
+            
     def get_tasks(self) -> DBResponse:
         """Return (tasks_list, error_code)."""
         reader = self._db_handler.read_todos()
         return DBResponse(reader.tasks_list, reader.error)
-        # tasks_list, read_error = self._db_handler.read_todos()
-        # return (tasks_list, read_error)
+        
     
     def clear_tasks(self) -> TodoResponse:
         """Clear all tasks in the DB. Returns TodoResponse with empty list."""
