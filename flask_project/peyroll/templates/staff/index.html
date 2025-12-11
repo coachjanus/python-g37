@@ -1,0 +1,58 @@
+<!-- flask_payroll/payroll/templates/staff/index.html -->
+{% extends 'base.html' %}
+
+
+<div class="container">
+  {% block header %}
+  <div class="d-flex justify-content-between mt-2 align-items-center">
+    <h2>Employees list</h2>
+    {% block create %}
+    <a type="button" class="btn btn-primary" href="{{ url_for('staff.create') }}">Hire new Employee</a>
+    {% endblock %}
+  
+  </div>
+  {% endblock header %}
+</div>
+
+{% block content %}
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Position</th>
+              <th scope="col">Date of hire</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in employees %}
+                <tr>
+                <th scope="row">{{ item['emp_id'] }}</th>
+                <td>{{ item['employee_name'] }}</td>
+                <td>{{ item['department_name'] }}</td>
+                <td>{{ item['role_name'] }}</td>
+                <td>{{ item['join_date'].strftime('%Y-%m-%d') }}</td>
+                <td>
+                  <div class="d-flex">
+                  <a type="button" class="btn btn-success" href="{{ url_for('staff.update', id=item['emp_id']) }}">Edit</a>
+                  
+                  <form action="{{ url_for('staff.delete', id=item['emp_id']) }}" method="post">
+                    <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+                  </form>
+                </div>
+                </td>
+                </tr>
+                
+            {% endfor %}
+            </tbody>
+    </table>
+  <p>
+	Learn more about this project by visiting the <a href="{{ url_for('pages.about') }}">About page</a>.
+  </p>
+</div>
+{% endblock content %}
+

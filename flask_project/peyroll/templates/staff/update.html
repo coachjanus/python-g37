@@ -1,0 +1,67 @@
+<!-- templates/staff/update.html -->
+ 
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+  <h2>{% block title %}Edit Employee{% endblock title %}</h2>
+  
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <div class="mb-3">
+        <label for="employee_name" class="form-label">Employee name</label>
+        <input type="text" class="form-control" id="employee_name" value="{{ request.form['employee_name'] or employee['employee_name'] }}" required  name="employee_name">
+    </div>
+
+
+    <div class="input-group mb-3">
+        <select class="form-select" name="department_id">
+            <option>Choose department</option>
+            {% for item in departments %}
+            <option value="{{item.id}}" {% if employee['department_id'] == item.id %}selected{% endif %}>{{ item.department_name }}</option>
+            {% endfor %}
+          </select>
+        
+        <select class="form-select" name="role_id">
+            <option selected>Choose role</option>
+            {% for item in roles %}
+            <option value="{{ item.id }}"  {% if employee['role_id'] == item.id %}selected{% endif %}>{{ item.role_name }}</option>
+            {% endfor %}
+          </select>
+    </div>
+    
+    <div class="row mb-3">
+
+        <div class="col">
+            <label for="weekly_salary" class="form-label">Weekly salary</label>
+            <input type="number" class="form-control" id="weekly_salary" value="{{ request.form['weekly_salary'] or employee['weekly_salary'] }}" name="weekly_salary">
+        </div>
+
+        <div class="col">
+            <label for="commission_per_sale" class="form-label">Commission per sale</label>
+            <input type="number" class="form-control" id="commission_per_sale" value="{{ request.form['commission_per_sale'] or employee['commission_per_sale'] }}" name="commission_per_sale">
+        </div>
+
+        <div class="col">
+            <label for="weekly_salary" class="form-label">Hour rate</label>
+            <input type="number" class="form-control" id="hour_rate" value="{{ request.form['hour_rate'] or employee['hour_rate'] }}"  name="hour_rate">
+        </div>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="Update employee" class="btn btn-danger">
+    </div>
+  </form>
+</div>
+    
+  <p>
+	Learn more about this project by visiting the <a href="{{ url_for('pages.about') }}">About page</a>.
+  </p>
+</div>
+{% endblock content %}
+
