@@ -24,16 +24,19 @@ def main():
     
     print(df)
     
-    for item in items:
-        print(item)
+    # for item in items:
+    #     print(item)
     
-    best_books = book_app.best_books()
-    for book in best_books: 
-        print(book)
-    print("\n\nCheapest 5 Books:\n")
-    cheapest_books = book_app.cheapest_books()
-    for book in cheapest_books: 
-        print(book)
+    # best_books = book_app.best_books()
+    # for book in best_books: 
+    #     print(book)
+
+    # print("\n\nCheapest 5 Books:\n")
+
+    # cheapest_books = book_app.cheapest_books()
+    # for book in cheapest_books: 
+    #     print(book)
+
 # import requests
 
 # def main():
